@@ -1,6 +1,8 @@
 /**
  * all documentation is the one supplied
  * hash table should use prime number
+ * 
+ * chaining for collision control
  */
 package proj4;
 

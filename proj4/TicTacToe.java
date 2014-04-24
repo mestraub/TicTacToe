@@ -41,6 +41,8 @@ public class TicTacToe {
 		return 1;
 	}
 	
+	
+	//add is over in here somehow
 	public boolean move(int row, int col){
 		
 		if (playerAt(row, col) == EMPTY){
@@ -75,8 +77,14 @@ public class TicTacToe {
 	}
 	
 	public boolean isOver(){
+		if (board[0][0] == CROSS && board[0][1] == CROSS && board[0][2] == CROSS)
+			return true;
+		else if (board[1][0] == CROSS && board[1][1] == CROSS && board[1][2] == CROSS)
+			return true;
+		else if (board[2][0] == CROSS && board[2][1] == CROSS && board[2][2] == CROSS)
+			return true;
 		
-		return true;
+		return false;
 	}
 	
 	public void clearBoard(){
