@@ -32,4 +32,23 @@ public class SmartPlayer {
 		
 		t.move(row, columns);
 	}
+	
+	public void newGame(int player){
+		
+	}
+	
+	public void endGame (TicTacToe finalBoard){
+		
+	}
+	
+	public int numberOfTimesSeen(TicTacToe t){
+		return 1;
+	}
+	
+	/*
+	public TicTacToe[] getSuccessors(TicTacToe t){
+		
+	}
+	*/
+	
 }

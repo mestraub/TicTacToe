@@ -25,6 +25,11 @@ public class Project4 {
 		play();
 	}
 	
+	//call with numgames = 1000
+	//smart player should be able to play as both X and O
+	//Move should now look for the highest percentage of wins, not just the most wins.  
+	//If a cell has not been played, view it as having a 100% win ratio.  
+	//Ties should still be broken randomly.
 	public static void play(){
 		RandomAI p1 = new RandomAI('o');
 		SmartPlayer p2 = new SmartPlayer('x');
@@ -46,7 +51,12 @@ public class Project4 {
 			game.printBoard();
 			System.out.println("---------------");
 		}
-
+		
+		Hashtable<Integer,Integer> table = new Hashtable<Integer,Integer>(7);
+		
+		System.out.println(table.numSlots());
+		table.put(2, 5);
+		System.out.println(table.numSlots());
 	}
 	
 	/*

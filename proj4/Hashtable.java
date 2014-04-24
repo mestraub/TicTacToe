@@ -1,7 +1,10 @@
 /**
  * all documentation is the one supplied
+ * hash table should use prime number
  */
 package proj4;
+
+import java.util.Arrays;
 
 /**
  * @author Megan
@@ -9,8 +12,18 @@ package proj4;
  */
 public class Hashtable <K,V> {
 	
+	Hashnode<K,V>[] hashTable;
+	
 	public Hashtable(){
 		
+	}
+	
+	@SuppressWarnings("unchecked") //removes warning about hash nodes
+	public Hashtable(int size){
+		//hashTable = (K[]) new Object[numSize]; // cast object array to make it generic
+		//gets around compilation error
+		
+		hashTable = new Hashnode[size];
 	}
 	
 	/**
@@ -20,7 +33,11 @@ public class Hashtable <K,V> {
 	 * @param key Key we're using for retrieval
 	 */
 	public V get (K key){
-		return null;
+		
+		if(hashTable[getPositionInHashtable(key)] != null)
+			return hashTable[getPositionInHashtable(key)].value;
+		else
+			return null;
 	}
 	
 	/**
@@ -30,7 +47,12 @@ public class Hashtable <K,V> {
 	 * @return true if key maps to a value.
 	 */
 	public boolean containsKey(K key){
-		return true;
+		
+		if(hashTable[getPositionInHashtable(key)].key == key){
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	/**
@@ -41,7 +63,11 @@ public class Hashtable <K,V> {
 	 * @param value Corresponding value.
 	 */
 	public void put (K key, V value){
-		
+		if (containsKey(key)){
+			hashTable[getPositionInHashtable(key)].value = value;
+		} else {
+
+		}
 	}
 	
 	/**
@@ -51,7 +77,7 @@ public class Hashtable <K,V> {
 	 * @return Size of the hashtable array.
 	 */
 	public int numSlots(){
-		return 0;
+		return hashTable.length;
 	}
 	
 	/**
@@ -60,7 +86,15 @@ public class Hashtable <K,V> {
 	 * @return Number of elements stored.
 	 */
 	public int numEntries(){
-		return 0;
+		int filledSlots = 0;
+		
+		for (int i = 0; i < hashTable.length; i++){
+			if (hashTable[i] != null){
+				filledSlots++;
+			}
+		}
+				
+		return filledSlots;
 	}
 	
 	/**
@@ -84,6 +118,30 @@ public class Hashtable <K,V> {
 	 * @return The index in the array we would store this key.
 	 */
 	public int getPositionInHashtable(K key){
-		return 0;
+		return key.hashCode() % hashTable.length;
+	}
+	
+	//resize teh array when full
+	public void resize(int size){
+		
+	}
+	
+	//creates an empty hash table
+	public void createEmpty(){
+		for (int i = 0; i < hashTable.length; i++){
+			hashTable[i] = null;
+		}
+	}
+	
+	private class Hashnode<K,V>{
+		
+		K key;
+		V value;
+		
+		public Hashnode (K key, V value){
+			this.key = key;
+			this.value = value;
+		}
+		
 	}
 }

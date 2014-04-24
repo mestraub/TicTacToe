@@ -43,7 +43,7 @@ public class TicTacToe {
 	
 	public boolean move(int row, int col){
 		
-		if (board[row][col] == EMPTY){
+		if (playerAt(row, col) == EMPTY){
 			
 			if (marker == 'x'){
 				board[row][col] = CROSS;
@@ -58,6 +58,9 @@ public class TicTacToe {
 		}
 	}
 	
+	//use this to determine if a player has won
+	//can win diagonally, vertically, or horizontally
+	// there are 8 possible ways to win
 	public int playerAt(int row, int col){
 		if (board[row][col] == CROSS)
 			return CROSS;
@@ -69,6 +72,11 @@ public class TicTacToe {
 	
 	public java.lang.String toString(){
 		return "yes";
+	}
+	
+	public boolean isOver(){
+		
+		return true;
 	}
 	
 	public void clearBoard(){

@@ -22,6 +22,8 @@ public class RandomAI {
 	}
 	
 	//will have to fix the marker stuff later
+	//takes a given board and makes a random move. if the board is full, it does nothing.
+	//t is the board moving.
 	public void move(TicTacToe t){
 		Random r = new Random();
 		
