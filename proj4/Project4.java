@@ -52,11 +52,19 @@ public class Project4 {
 			System.out.println("---------------");
 		}
 		
-		Hashtable<Integer,Integer> table = new Hashtable<Integer,Integer>(7);
+		Hashtable<Integer,Integer> table = new Hashtable<Integer,Integer>();
 		
 		System.out.println(table.numSlots());
 		table.put(2, 5);
-		System.out.println(table.numSlots());
+		table.put(7, 4);
+		table.put(9, 3);
+		table.put(12, 8);
+		table.put(13, 1);
+		System.out.println(table.get(2));
+		System.out.println(table.get(7));
+		System.out.println(table.get(12));
+		System.out.println(table.get(13));
+		
 	}
 	
 	/*

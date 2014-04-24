@@ -12,10 +12,12 @@ import java.util.Arrays;
  */
 public class Hashtable <K,V> {
 	
+	static final int DEFAULT_SIZE = 31;
 	Hashnode<K,V>[] hashTable;
+	int collisions;
 	
 	public Hashtable(){
-		
+		this(DEFAULT_SIZE);
 	}
 	
 	@SuppressWarnings("unchecked") //removes warning about hash nodes
@@ -23,6 +25,7 @@ public class Hashtable <K,V> {
 		//hashTable = (K[]) new Object[numSize]; // cast object array to make it generic
 		//gets around compilation error
 		
+		collisions = 0;
 		hashTable = new Hashnode[size];
 	}
 	
@@ -48,11 +51,12 @@ public class Hashtable <K,V> {
 	 */
 	public boolean containsKey(K key){
 		
-		if(hashTable[getPositionInHashtable(key)].key == key){
-			return true;
-		} else {
-			return false;
+		for (int i = 0; i < hashTable.length; i++){
+			if (hashTable[i] == key)
+				return true;
 		}
+		
+		return false;
 	}
 	
 	/**
@@ -66,7 +70,7 @@ public class Hashtable <K,V> {
 		if (containsKey(key)){
 			hashTable[getPositionInHashtable(key)].value = value;
 		} else {
-
+			hashTable[getPositionInHashtable(key)] = new Hashnode<K,V> (key, value);
 		}
 	}
 	
@@ -107,7 +111,7 @@ public class Hashtable <K,V> {
 	 * @return Number of collisions.
 	 */
 	public int numCollisions(){
-		return 0;
+		return collisions;
 	}
 	
 	/**
@@ -118,6 +122,7 @@ public class Hashtable <K,V> {
 	 * @return The index in the array we would store this key.
 	 */
 	public int getPositionInHashtable(K key){
+		
 		return key.hashCode() % hashTable.length;
 	}
 	
@@ -135,13 +140,24 @@ public class Hashtable <K,V> {
 	
 	private class Hashnode<K,V>{
 		
-		K key;
-		V value;
+		private K key;
+		private V value;
 		
-		public Hashnode (K key, V value){
+		Hashnode (K key, V value){
 			this.key = key;
 			this.value = value;
 		}
 		
 	}
+
+	/**
+	 * @return
+	 */
+	/*
+	public void print() {
+		for (int i = 0; i < hashTable.length; i++){
+			System.out.println(" key at " + i + " " + hashTable[i].key);
+			System.out.println(" value at " + i + " " + hashTable[i].value);
+		}
+	}*/
 }
