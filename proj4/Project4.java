@@ -60,10 +60,22 @@ public class Project4 {
 		table.put(9, 3);
 		table.put(12, 8);
 		table.put(13, 1);
+		
+		table.put(23, 3);
+		table.put(20, 7);
+		
+		
 		System.out.println(table.get(2));
 		System.out.println(table.get(7));
+		System.out.println(table.get(9));
 		System.out.println(table.get(12));
 		System.out.println(table.get(13));
+		System.out.println(table.get(23));
+		System.out.println(table.get(20));
+		
+		
+		System.out.println("Num entries: " + table.numEntries());
+		System.out.println("size " + table.numSlots());
 		
 	}
 	

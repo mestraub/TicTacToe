@@ -14,9 +14,10 @@ import java.util.Arrays;
  */
 public class Hashtable <K,V> {
 	
-	static final int DEFAULT_SIZE = 31;
+	static final int DEFAULT_SIZE = 5;
 	Hashnode<K,V>[] hashTable;
 	int collisions;
+	int entries;
 	
 	public Hashtable(){
 		this(DEFAULT_SIZE);
@@ -28,6 +29,7 @@ public class Hashtable <K,V> {
 		//gets around compilation error
 		
 		collisions = 0;
+		entries = 0;
 		hashTable = new Hashnode[size];
 	}
 	
@@ -53,12 +55,16 @@ public class Hashtable <K,V> {
 	 */
 	public boolean containsKey(K key){
 		
+		int currentPos = getPositionInHashtable(key);
+		return hashTable[currentPos] != null && (hashTable[currentPos].key == key);
+		/*
 		for (int i = 0; i < hashTable.length; i++){
 			if (hashTable[i] == key)
 				return true;
 		}
 		
 		return false;
+		*/
 	}
 	
 	/**
@@ -69,10 +75,19 @@ public class Hashtable <K,V> {
 	 * @param value Corresponding value.
 	 */
 	public void put (K key, V value){
+			
 		if (containsKey(key)){
 			hashTable[getPositionInHashtable(key)].value = value;
+			System.out.println("I am in if");
 		} else {
 			hashTable[getPositionInHashtable(key)] = new Hashnode<K,V> (key, value);
+			entries++;
+			System.out.println("I am in else");
+		}
+		
+		if (entries > hashTable.length / 2){
+			System.out.println("rehashing the table");
+			resize(hashTable.length);
 		}
 	}
 	
@@ -92,15 +107,7 @@ public class Hashtable <K,V> {
 	 * @return Number of elements stored.
 	 */
 	public int numEntries(){
-		int filledSlots = 0;
-		
-		for (int i = 0; i < hashTable.length; i++){
-			if (hashTable[i] != null){
-				filledSlots++;
-			}
-		}
-				
-		return filledSlots;
+		return entries;
 	}
 	
 	/**
@@ -128,8 +135,21 @@ public class Hashtable <K,V> {
 		return key.hashCode() % hashTable.length;
 	}
 	
-	//resize teh array when full
+	//resize the array when full
 	public void resize(int size){
+		
+		Hashnode<K,V>[] oldArray = hashTable;
+		
+		int newSize = size * 5;
+		
+		hashTable = new Hashnode[newSize];
+		entries = 0;
+		
+		for (int i = 0; i < oldArray.length; i++){
+			if(oldArray [i] != null){
+				put(oldArray[i].key, oldArray[i].value);
+			} 
+		}
 		
 	}
 	
@@ -138,6 +158,9 @@ public class Hashtable <K,V> {
 		for (int i = 0; i < hashTable.length; i++){
 			hashTable[i] = null;
 		}
+		
+		entries = 0;
+		collisions = 0;
 	}
 	
 	private class Hashnode<K,V>{
@@ -151,15 +174,4 @@ public class Hashtable <K,V> {
 		}
 		
 	}
-
-	/**
-	 * @return
-	 */
-	/*
-	public void print() {
-		for (int i = 0; i < hashTable.length; i++){
-			System.out.println(" key at " + i + " " + hashTable[i].key);
-			System.out.println(" value at " + i + " " + hashTable[i].value);
-		}
-	}*/
 }
