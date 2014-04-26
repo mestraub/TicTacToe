@@ -11,14 +11,16 @@ import java.util.Random;
  */
 public class RandomAI {
 	
-	char marker;
+	//char marker;
+	int player;
 	
 	public RandomAI(){
 		
 	}
 	
-	public RandomAI (char marker){
-		this.marker = marker;
+	public RandomAI (int player){
+		//this.marker = marker;
+		this.player = player;
 	}
 	
 	//will have to fix the marker stuff later
@@ -30,7 +32,7 @@ public class RandomAI {
 		int row = r.nextInt(3-0);
 		int columns = r.nextInt(3-0);
 		
-		t.setMarker(marker);
+		t.setMarker(player);
 		
 		t.move(row, columns);
 	}

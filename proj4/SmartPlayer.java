@@ -11,14 +11,16 @@ import java.util.Random;
  */
 public class SmartPlayer {
 	
-	char marker;
+	//char marker;
+	int player;
 	
 	public SmartPlayer(){
 		
 	}
 	
-	public SmartPlayer(char marker){
-		this.marker = marker;
+	public SmartPlayer( int player){
+	//	this.marker = marker;
+		this.player = player;
 	}
 	
 	//over simplified
@@ -28,7 +30,7 @@ public class SmartPlayer {
 		int row = r.nextInt(3-0);
 		int columns = r.nextInt(3-0);
 		
-		t.setMarker(marker);
+		t.setMarker(player);
 		
 		t.move(row, columns);
 	}

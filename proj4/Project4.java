@@ -22,7 +22,10 @@ public class Project4 {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		play();
+		
+		int numGames = 1000;
+		
+		play(numGames);
 	}
 	
 	//call with numgames = 1000
@@ -30,9 +33,10 @@ public class Project4 {
 	//Move should now look for the highest percentage of wins, not just the most wins.  
 	//If a cell has not been played, view it as having a 100% win ratio.  
 	//Ties should still be broken randomly.
-	public static void play(){
-		RandomAI p1 = new RandomAI('o');
-		SmartPlayer p2 = new SmartPlayer('x');
+	public static void play(int numGames){
+		RandomAI p1 = new RandomAI(1);
+		//RandomAI p2 = new RandomAI('X', 2);
+		SmartPlayer p2 = new SmartPlayer(2);
 		
 		TicTacToe game = new TicTacToe();
 		//game.printBoard();
@@ -45,13 +49,27 @@ public class Project4 {
 			System.out.println(row);
 		}*/
 		
-		for (int i = 0; i < 9; i++){
-			p1.move(game);
-			p2.move(game);
+		//while game is still going keep playing
+		// stop when is over is true
+		// track turns for each one
+		// if statement if turn one
+		// if statement if turn two
+		
+		
+		for (int i = 0; i < 20; i++){
+			
+			if (game.getTurn()){
+				p1.move(game);
+			} else if (!game.getTurn()){
+				p2.move(game);
+			}
+
+	
 			game.printBoard();
 			System.out.println("---------------");
 		}
 		
+		/*
 		Hashtable<Integer,Integer> table = new Hashtable<Integer,Integer>();
 		
 		System.out.println(table.numSlots());
@@ -76,6 +94,8 @@ public class Project4 {
 		
 		System.out.println("Num entries: " + table.numEntries());
 		System.out.println("size " + table.numSlots());
+		
+		*/
 		
 	}
 	

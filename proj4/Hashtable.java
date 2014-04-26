@@ -3,6 +3,9 @@
  * hash table should use prime number
  * 
  * chaining for collision control
+ * 
+ * when have time later look at resizing for next prime
+ * 
  */
 package proj4;
 
@@ -14,13 +17,15 @@ import java.util.Arrays;
  */
 public class Hashtable <K,V> {
 	
-	static final int DEFAULT_SIZE = 5;
+	static final int DEFAULT_SIZE = 1009;
 	Hashnode<K,V>[] hashTable;
 	int collisions;
 	int entries;
 	
 	public Hashtable(){
 		this(DEFAULT_SIZE);
+		entries = 0;
+		collisions = 0;
 	}
 	
 	@SuppressWarnings("unchecked") //removes warning about hash nodes
@@ -85,10 +90,12 @@ public class Hashtable <K,V> {
 			System.out.println("I am in else");
 		}
 		
+		/*
 		if (entries > hashTable.length / 2){
 			System.out.println("rehashing the table");
 			resize(hashTable.length);
 		}
+		*/
 	}
 	
 	/**
@@ -135,6 +142,7 @@ public class Hashtable <K,V> {
 		return key.hashCode() % hashTable.length;
 	}
 	
+	/*
 	//resize the array when full
 	public void resize(int size){
 		
@@ -152,6 +160,7 @@ public class Hashtable <K,V> {
 		}
 		
 	}
+	*/
 	
 	//creates an empty hash table
 	public void createEmpty(){

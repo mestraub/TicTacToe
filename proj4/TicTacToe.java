@@ -1,4 +1,8 @@
 /**
+ * make int player and have that be 1 or 2
+ * make set mark so it determines the char for x and o
+ * finish win sections, so they equal player 
+ * make it so the game rotates turns
  * 
  */
 package proj4;
@@ -19,18 +23,32 @@ public class TicTacToe {
 	public static final int DRAW = 0;
 	public static final int WINS = 0;
 	
-	public char marker; // x or o will have to be changed later
+	//public char marker; // x or o will have to be changed later
+	public int player1;
+	public int player2;
+	
+	public boolean turn = true; // used to track which turn has occurred. true for p1 false for p2
 	
 	//my board
-	int[][] board = new int[ROWS][COLUMNS];
+	int[][] board;
 	
 	public TicTacToe(){
-		clearBoard(); //may have to change this constructor later
+		board = new int[ROWS][COLUMNS];	
+	//	clearBoard(); //may have to change this constructor later
 	}
 	
 	//added method that might have to be removed
-	public void setMarker(char marker){
-		this.marker = marker;
+	public void setMarker(int player){
+		//this.marker = marker;
+		//this.player = player;
+		
+		if (player == 1){
+			player1 = CROSS; // 1 is for x's
+		}
+		
+		if (player == 2){
+			player2 = CIRCLE; //2 is for o's
+		}
 	}
 	
 	public int getWinner(){
@@ -45,19 +63,67 @@ public class TicTacToe {
 	//add is over in here somehow
 	public boolean move(int row, int col){
 		
-		if (playerAt(row, col) == EMPTY){
-			
-			if (marker == 'x'){
-				board[row][col] = CROSS;
-			} else if (marker == 'o'){
-				board[row][col] = CIRCLE;
+		//if (!isOver()){
+			if (playerAt(row, col) == EMPTY){
+				if(turn){
+					board[row][col] = player1;
+					
+					if(!isOver(player1)){
+						turn = false;
+					}
+					
+				}else if (!turn){
+					
+					board[row][col] = player2;
+					
+					if(!isOver(player2)){
+						turn = true;
+						
+					}
+				}
+				
+				return true;
+			}else{
+				return false;
 			}
-			
-			return true;
-			
-		} else {
-			return false;
-		}
+		//}else {
+		//	clearBoard();
+		//return false;
+		//}
+		
+		
+		/*
+			if (playerAt(row, col) == EMPTY){
+				
+				if (turn){
+					
+					board[row][col] = player1;
+					
+					if(!isOver()){
+						turn = false;
+					}else
+						clearBoard();
+					
+				} else if (!turn){
+					
+					board[row][col] = player2;
+					if(!isOver()){
+						turn = true;
+					} else
+						clearBoard();
+				}
+				
+				return true;
+				
+			} else {
+				return false;
+			}
+			*/
+	}
+	
+	
+	public boolean getTurn(){
+		return turn;
 	}
 	
 	//use this to determine if a player has won
@@ -65,9 +131,9 @@ public class TicTacToe {
 	// there are 8 possible ways to win
 	public int playerAt(int row, int col){
 		if (board[row][col] == CROSS)
-			return CROSS;
+			return player1;
 		else if (board[row][col] == CIRCLE)
-			return CIRCLE;
+			return player2;
 		else
 			return EMPTY;	
 	}
@@ -76,15 +142,57 @@ public class TicTacToe {
 		return "yes";
 	}
 	
-	public boolean isOver(){
-		if (board[0][0] == CROSS && board[0][1] == CROSS && board[0][2] == CROSS)
-			return true;
-		else if (board[1][0] == CROSS && board[1][1] == CROSS && board[1][2] == CROSS)
-			return true;
-		else if (board[2][0] == CROSS && board[2][1] == CROSS && board[2][2] == CROSS)
-			return true;
+	public boolean isOver(int currentPlayer){
+		/*
+		int currentPlayer = -1;
+		//System.out.println(currentPlayer);
+		if (turn){
+			currentPlayer = player1;
+			//System.out.println(currentPlayer);
+		}else {
+			currentPlayer = player2;
+			//System.out.println(currentPlayer);
+		}*/
 		
-		return false;
+		if (board[0][0] == currentPlayer && board[0][1] == currentPlayer && board[0][2] == currentPlayer){
+			System.out.println("Player " + currentPlayer + " just won!!");
+			//clearBoard();
+			return true;
+		}else if (board[1][0] == currentPlayer && board[1][1] == currentPlayer && board[1][2] == currentPlayer){
+			System.out.println("Player " + currentPlayer + " just won!!");
+			//clearBoard();
+			return true;
+		}else if (board[2][0] == currentPlayer && board[2][1] == currentPlayer && board[2][2] == currentPlayer){
+			System.out.println("Player " + currentPlayer + " just won!!");
+			//clearBoard();
+			return true;
+		}else if(board[0][0] == currentPlayer && board[1][0] == currentPlayer && board[2][0] == currentPlayer) {
+			System.out.println("Player " + currentPlayer + " just won!!");
+			//clearBoard();
+			return true;
+		}else if(board[0][1] == currentPlayer && board[1][1] == currentPlayer && board[2][1] == currentPlayer) {
+			System.out.println("Player " + currentPlayer + " just won!!");
+			//clearBoard();
+			return true;
+		}else if(board[0][2] == currentPlayer && board[1][2] == currentPlayer && board[2][2] == currentPlayer) {
+			System.out.println("Player " + currentPlayer + " just won!!");
+			//clearBoard();
+			return true;
+		}else if (board[0][0] == currentPlayer && board[1][1] == currentPlayer && board[2][2] == currentPlayer){
+			System.out.println("Player " + currentPlayer + " just won!!");
+			//clearBoard();
+			return true;
+		}else if (board[0][2] == currentPlayer && board[1][1] == currentPlayer && board[2][0] == currentPlayer){
+			System.out.println("Player " + currentPlayer + " just won!!");
+			//clearBoard();
+			return true;
+		}else {
+			return false;
+		}
+		
+		//add clear board so it occurs before it returns that the game is over
+		
+		//return false;
 	}
 	
 	public void clearBoard(){
