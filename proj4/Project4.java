@@ -23,7 +23,8 @@ public class Project4 {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		int numGames = 1000;
+		//int numGames = 1000;
+		int numGames = 2;
 		
 		play(numGames);
 	}
@@ -39,15 +40,6 @@ public class Project4 {
 		SmartPlayer p2 = new SmartPlayer(2);
 		
 		TicTacToe game = new TicTacToe();
-		//game.printBoard();
-		
-		Random r = new Random();
-		
-		/*
-		for (int i = 0; i < 10; i ++){
-			int row = r.nextInt(3-0);
-			System.out.println(row);
-		}*/
 		
 		//while game is still going keep playing
 		// stop when is over is true
@@ -55,19 +47,37 @@ public class Project4 {
 		// if statement if turn one
 		// if statement if turn two
 		
+		int gameCount = 0;
 		
-		for (int i = 0; i < 20; i++){
-			
+		while(gameCount < numGames){
+	
+
 			if (game.getTurn()){
 				p1.move(game);
+						
 			} else if (!game.getTurn()){
-				p2.move(game);
+				p2.move(game);	
+						
 			}
-
-	
+				
 			game.printBoard();
 			System.out.println("---------------");
+			System.out.println("hash board " + game.hashcode());	
+			if(game.getWinner() == 1 | game.getWinner() == 2){
+				System.out.println("Player " + game.getWinner() + " just won!!");
+				
+				game.clearBoard();
+				gameCount++;
+			}else if (game.isDraw()){
+				System.out.println("game was a draw");
+				
+				game.clearBoard();
+				gameCount++;
+			}
 		}
+		
+		
+	}
 		
 		/*
 		Hashtable<Integer,Integer> table = new Hashtable<Integer,Integer>();
@@ -97,7 +107,7 @@ public class Project4 {
 		
 		*/
 		
-	}
+	
 	
 	/*
 	 * method play

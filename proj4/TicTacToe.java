@@ -7,6 +7,8 @@
  */
 package proj4;
 
+import java.util.Random;
+
 /**
  * @author Megan
  *
@@ -20,12 +22,15 @@ public class TicTacToe {
 	public static final int CROSS = 1;
 	public static final int CIRCLE = 2;
 	
-	public static final int DRAW = 0;
-	public static final int WINS = 0;
+	public int draw = 0;
+	public int wins = 0;
 	
 	//public char marker; // x or o will have to be changed later
 	public int player1;
 	public int player2;
+	public int currentPlayer;
+	
+	public int winner;
 	
 	public boolean turn = true; // used to track which turn has occurred. true for p1 false for p2
 	
@@ -39,9 +44,7 @@ public class TicTacToe {
 	
 	//added method that might have to be removed
 	public void setMarker(int player){
-		//this.marker = marker;
-		//this.player = player;
-		
+
 		if (player == 1){
 			player1 = CROSS; // 1 is for x's
 		}
@@ -52,73 +55,73 @@ public class TicTacToe {
 	}
 	
 	public int getWinner(){
-		return 1;
+		
+		
+		if(isOver()){
+			wins++;
+			return winner;
+		}else
+			return 0;
+		
+	//	return 1;
 	}
 	
+	
+	//hashes the boared state
+	// look at this later and see if you can make it more spread out
 	public int hashcode(){
-		return 1;
+		
+		int hash = 0;
+		Random r = new Random();
+		
+		hash = board[0][0] + board [0][1] + board[0][2]
+				+ board[1][0] + board [1][1] + board[1][2]
+				+ board[2][0] + board [2][1] + board[2][2];
+		
+		hash = (int) Math.floor((hash^3) * 0.666667) * r.nextInt(37-2);
+		
+		return hash;
 	}
 	
+	public boolean isDraw(){
+		int count = 0;
+		for (int i = 0; i < board.length; i++){
+			for (int j = 0; j < board.length; j++)
+				if(board[i][j] != EMPTY)
+					count++;
+		}
+		
+		if (count == 9){
+			draw++;
+			return true;
+		}
+		else
+			return false;
+	}
 	
 	//add is over in here somehow
 	public boolean move(int row, int col){
 		
-		//if (!isOver()){
-			if (playerAt(row, col) == EMPTY){
-				if(turn){
-					board[row][col] = player1;
-					
-					if(!isOver(player1)){
-						turn = false;
-					}
-					
-				}else if (!turn){
-					
-					board[row][col] = player2;
-					
-					if(!isOver(player2)){
-						turn = true;
-						
-					}
-				}
+		if (playerAt(row, col) == EMPTY){
+			
+			if(turn){
 				
-				return true;
-			}else{
-				return false;
-			}
-		//}else {
-		//	clearBoard();
-		//return false;
-		//}
-		
-		
-		/*
-			if (playerAt(row, col) == EMPTY){
+				currentPlayer = player1;
+				board[row][col] = player1;
+				turn = false;
+
+					
+			}else if (!turn){
 				
-				if (turn){
-					
-					board[row][col] = player1;
-					
-					if(!isOver()){
-						turn = false;
-					}else
-						clearBoard();
-					
-				} else if (!turn){
-					
-					board[row][col] = player2;
-					if(!isOver()){
-						turn = true;
-					} else
-						clearBoard();
-				}
-				
-				return true;
-				
-			} else {
-				return false;
-			}
-			*/
+				currentPlayer = player2;
+				board[row][col] = player2;
+				turn = true;
+
+			}	
+			return true;	
+		}else{
+			return false;
+		}
 	}
 	
 	
@@ -142,7 +145,7 @@ public class TicTacToe {
 		return "yes";
 	}
 	
-	public boolean isOver(int currentPlayer){
+	public boolean isOver(){
 		/*
 		int currentPlayer = -1;
 		//System.out.println(currentPlayer);
@@ -152,49 +155,48 @@ public class TicTacToe {
 		}else {
 			currentPlayer = player2;
 			//System.out.println(currentPlayer);
-		}*/
-		
+		}
+		*/
 		if (board[0][0] == currentPlayer && board[0][1] == currentPlayer && board[0][2] == currentPlayer){
-			System.out.println("Player " + currentPlayer + " just won!!");
+			
+			winner = currentPlayer;
+			//System.out.println("Player " + currentPlayer + " just won!!");
 			//clearBoard();
 			return true;
 		}else if (board[1][0] == currentPlayer && board[1][1] == currentPlayer && board[1][2] == currentPlayer){
-			System.out.println("Player " + currentPlayer + " just won!!");
-			//clearBoard();
+			
+			winner = currentPlayer;
 			return true;
 		}else if (board[2][0] == currentPlayer && board[2][1] == currentPlayer && board[2][2] == currentPlayer){
-			System.out.println("Player " + currentPlayer + " just won!!");
-			//clearBoard();
+			
+			winner = currentPlayer;
 			return true;
 		}else if(board[0][0] == currentPlayer && board[1][0] == currentPlayer && board[2][0] == currentPlayer) {
-			System.out.println("Player " + currentPlayer + " just won!!");
-			//clearBoard();
+			
+			winner = currentPlayer;
 			return true;
 		}else if(board[0][1] == currentPlayer && board[1][1] == currentPlayer && board[2][1] == currentPlayer) {
-			System.out.println("Player " + currentPlayer + " just won!!");
-			//clearBoard();
+			
+			winner = currentPlayer;
 			return true;
 		}else if(board[0][2] == currentPlayer && board[1][2] == currentPlayer && board[2][2] == currentPlayer) {
-			System.out.println("Player " + currentPlayer + " just won!!");
-			//clearBoard();
+			
+			winner = currentPlayer;
 			return true;
 		}else if (board[0][0] == currentPlayer && board[1][1] == currentPlayer && board[2][2] == currentPlayer){
-			System.out.println("Player " + currentPlayer + " just won!!");
-			//clearBoard();
+			
+			winner = currentPlayer;
 			return true;
 		}else if (board[0][2] == currentPlayer && board[1][1] == currentPlayer && board[2][0] == currentPlayer){
-			System.out.println("Player " + currentPlayer + " just won!!");
-			//clearBoard();
+			
+			winner = currentPlayer;
 			return true;
 		}else {
 			return false;
 		}
-		
-		//add clear board so it occurs before it returns that the game is over
-		
-		//return false;
 	}
 	
+	//empties the board
 	public void clearBoard(){
 		for (int rows = 0; rows < ROWS; rows++){
 			for (int columns = 0; columns < COLUMNS; columns++){
@@ -203,6 +205,7 @@ public class TicTacToe {
 		}
 	}
 	
+	//prints teh board
 	public void printBoard(){
 		for (int rows = 0; rows < ROWS; rows++){
 			for (int columns = 0; columns < COLUMNS; columns++){
@@ -213,6 +216,7 @@ public class TicTacToe {
 		}
 	}
 	
+	//used for printing the board
 	public void printCell(int cell){
 		if (cell == EMPTY)
 			System.out.print("-");
@@ -221,14 +225,4 @@ public class TicTacToe {
 		else if (cell == CIRCLE)
 			System.out.print("O");
 	}
-	
-	/*
-	public static void main(String[] args){
-		
-		TicTacToe game = new TicTacToe();
-		game.printBoard();
-	}
-	*/
-	
-	
 }
