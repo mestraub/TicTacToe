@@ -1,33 +1,50 @@
-/**
- * all documentation is the one supplied
- * hash table should use prime number
- * 
- * chaining for collision control
- * 
- * when have time later look at resizing for next prime
- * 
- */
 package proj4;
 
-import java.util.Arrays;
-
 /**
- * @author Megan
+ * A generic hashtable class, mapping keys to values.
+ * 
+ * @version 04/28/14
+ * @author Megan Straub <mstraub1@umbc.edu>
+ * CMSC 341 - Spring 2014 - Project 4
+ * Section 4
  *
  */
 public class Hashtable <K,V> {
 	
-	static final int DEFAULT_SIZE = 1009;
-	Hashnode<K,V>[] hashTable;
-	int collisions;
-	int entries;
+	/**
+	 * The default size of the hashtable.
+	 */
+	public static final int DEFAULT_SIZE = 397;
 	
+	/**
+	 * The generic hashnode that contains keys and values.
+	 */
+	public Hashnode<K,V>[] hashTable;
+	
+	/**
+	 * The number of collisions in the hashtable.
+	 */
+	public int collisions;
+	
+	/**
+	 * The number of entires in the hashtable.
+	 */
+	public int entries;
+	
+	/**
+	 * A constructor for Hashtable.
+	 */
 	public Hashtable(){
 		this(DEFAULT_SIZE);
 		entries = 0;
 		collisions = 0;
 	}
 	
+	/**
+	 * A second constructor for Hastable that sets the size of the hashtable.
+	 * 
+	 * @param size
+	 */
 	@SuppressWarnings("unchecked") //removes warning about hash nodes
 	public Hashtable(int size){
 		//hashTable = (K[]) new Object[numSize]; // cast object array to make it generic
@@ -83,11 +100,11 @@ public class Hashtable <K,V> {
 			
 		if (containsKey(key)){
 			hashTable[getPositionInHashtable(key)].value = value;
-			System.out.println("I am in if");
+		//	System.out.println("I am in if");
 		} else {
 			hashTable[getPositionInHashtable(key)] = new Hashnode<K,V> (key, value);
 			entries++;
-			System.out.println("I am in else");
+		//	System.out.println("I am in else");
 		}
 		
 		/*
@@ -138,8 +155,21 @@ public class Hashtable <K,V> {
 	 * @return The index in the array we would store this key.
 	 */
 	public int getPositionInHashtable(K key){
+		// using linear probing
 		
-		return key.hashCode() % hashTable.length;
+		int offset = 1;
+		int currentPosition = key.hashCode() % hashTable.length;
+		
+		while(hashTable[currentPosition] != null && !hashTable[currentPosition].key.equals(key)){
+			currentPosition += offset;
+			offset += 1;
+			collisions++;
+			
+			if (currentPosition >= hashTable.length)
+				currentPosition -= hashTable.length;
+		}
+		
+		return currentPosition;
 	}
 	
 	/*
@@ -172,6 +202,23 @@ public class Hashtable <K,V> {
 		collisions = 0;
 	}
 	
+	/*
+	public String toString(){
+		String str = "";
+		int count = 0;
+		
+		for (Hashnode i: hashTable){
+			if (i.key != null){
+				str += "[" + count + "]" + i.key.toString() + "\n";
+			}
+			
+			count++;
+		}
+		
+		return str;
+	}
+	*/
+	
 	private class Hashnode<K,V>{
 		
 		private K key;
@@ -181,6 +228,13 @@ public class Hashtable <K,V> {
 			this.key = key;
 			this.value = value;
 		}
+		
+		/*
+        public String toString()
+        {
+            return key.toString();
+        }
+        */
 		
 	}
 }
