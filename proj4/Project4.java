@@ -14,10 +14,9 @@
 */
 package proj4;
 
-import java.util.Random;
-
 /**
- * This class is an AI that makes moves randomly on a tic tac toe board.
+ * This class runs the Tic Tac Toe board simulation between the RandomAI player and the
+ * SmartPlayer. Results are printed indicating how well each player did in the games played.
  * 
  * @version 04/28/14
  * @author Megan Straub <mstraub1@umbc.edu>
@@ -28,49 +27,30 @@ import java.util.Random;
 public class Project4 {
 	
 	/**
+	* The main method that runs the simulation of the tic tac toe game.
+	* 
 	* @param args
 	*/
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		
 		RandomAI p1 = new RandomAI(1);
 		SmartPlayer p2 = new SmartPlayer(2);
-		int numGames = 5;
+		int numGames = 20;
 		
-	//	play(p1, p2, numGames);
-		
-		/*
-		Hashtable<Integer,Integer> table = new Hashtable<Integer,Integer>();
-		System.out.println(table.numSlots());
-		table.put(2, 5);
-		table.put(7, 4);
-		table.put(9, 3);
-		table.put(12, 8);
-		table.put(13, 1);
-		table.put(23, 3);
-		table.put(20, 7);
-		table.put(20, 8);
-		table.put(15, 8);
-		table.put(56, 8);
-		System.out.println(table.get(2));
-		System.out.println(table.get(7));
-		System.out.println(table.get(9));
-		System.out.println(table.get(12));
-		System.out.println(table.get(13));
-		System.out.println(table.get(23));
-		System.out.println(table.get(20));
-		//System.out.println(table.toString());
-		System.out.println("Num entries: " + table.numEntries());
-		System.out.println("size " + table.numSlots());
-		System.out.println("collisions " + table.numCollisions());
-		*/
+		play(p1, p2, numGames);
 	}
 	
-		//call with numgames = 1000
-		//smart player should be able to play as both X and O
-		//Move should now look for the highest percentage of wins, not just the most wins.
-		//If a cell has not been played, view it as having a 100% win ratio.
-		//Ties should still be broken randomly.
+	/**
+	 * This method runs the simulation of the tic tac toe board game. Each player is assigned a number (1 or 2),
+	 * based on that number it determines whether the player will play as X or O. In the simulation each player
+	 * moves depending on whose turn it is. If a win scenario is reached, the current game will end and the players
+	 * will continue playing until all games have been played. At the end of all games being played, a report 
+	 * will be printed to document statistics about the games.
+	 * 
+	 * @param p1 the RandomAI player
+	 * @param p2 the SmartPlayer
+	 * @param numGames the amount of games the two players must play
+	 */
 	public static void play(RandomAI p1, SmartPlayer p2, int numGames){
 		
 		//while game is still going keep playing
@@ -85,7 +65,7 @@ public class Project4 {
 		for(int i = 0; i < numGames; i++){
 			TicTacToe game = new TicTacToe();
 			p2.newGame(2);
-			System.out.println("New Game!!");
+			//System.out.println("New Game!!");
 			
 			for(int j = 0; j < 9; j++){ // 9 turns total for the game
 				if (game.getTurn()){
@@ -95,39 +75,36 @@ public class Project4 {
 				}
 				
 				
-				game.printBoard();
-				System.out.println("hashed code " + game.hashCode());
+			//	game.printBoard();
+			//	System.out.println("hashed code " + game.hashCode());
 				
 				if(game.getWinner() != -1 && j > 3){
 					
 					p2.endGame(game);
 					
 					if(game.getWinner() == 1){
-						System.out.println("Player " + game.getWinner() + " just won!!");
-						//j = 9;
+					//	System.out.println("Player " + game.getWinner() + " just won!!");
 						p1Wins++;
 					}else if (game.getWinner() == 2){
-						System.out.println("Player " + game.getWinner() + " just won!!");
-						//j = 9;
+					//	System.out.println("Player " + game.getWinner() + " just won!!");
 						p2Wins++;
-					}
-					
+					}	
 					break;
-				} // do something for draws
+				}
 			}
 		}
 		
 		//figure out how to format this correctly
 		
 		
-		System.out.println("\nREPORT: ");
-		System.out.println("Player 1 won: " + p1Wins);
+	//	System.out.println("\nREPORT: ");
+	//	System.out.println("Player 1 won: " + p1Wins);
 		//System.out.format("%.4f", p1Wins);
 		//System.out.println("Player 1 Win Percentage: " + winPercentage);
 	//	System.out.printf("%.2f", winPercentage);
 	
 		
-		System.out.println("Player 2 won: " + p2Wins);
+	//	System.out.println("Player 2 won: " + p2Wins);
 		//System.out.println("Player 2 Win Percentage: " + winPercentage);
 		
 		p2.printStats();

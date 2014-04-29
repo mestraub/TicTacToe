@@ -16,12 +16,30 @@ import java.util.Random;
  *
  */
 public class SmartPlayer {
-
+	
+	/**
+	 * 
+	 */
 	public int player;
+	
+	/**
+	 * 
+	 */
 	public Hashtable<Integer,Statistics> table;
+	
+	/**
+	 * 
+	 */
 	int[] copiedGameBoard;
+	
+	/**
+	 * 
+	 */
 	int stateMove;
 	
+	/**
+	 * 
+	 */
 	public SmartPlayer(){
 		player = -1;
 		table = new Hashtable<Integer, Statistics>();
@@ -29,6 +47,10 @@ public class SmartPlayer {
 		stateMove = 0;
 	}
 	
+	/**
+	 * 
+	 * @param player
+	 */
 	public SmartPlayer( int player){
 		this.player = player;
 		table = new Hashtable<Integer, Statistics>();
@@ -36,6 +58,10 @@ public class SmartPlayer {
 		stateMove = 0;
 	}
 	
+	/**
+	 * 
+	 * @param player
+	 */
 	public void newGame(int player){
 		this.player = player;
 		copiedGameBoard = new int[9];
@@ -127,6 +153,11 @@ public class SmartPlayer {
 		
 	}
 	
+	/**
+	 * 
+	 * @param t
+	 * @return
+	 */
 	public int numberOfTimesSeen(TicTacToe t){
 		if(table.containsKey(t.hashCode())){
 			return table.get(t.hashCode()).timesSeen;
@@ -160,7 +191,7 @@ public class SmartPlayer {
 	
 	public void printStats(){
 		//print game stats of hashtable slots, entires, % full, and number of collisions
-		System.out.println("\n\nFINAL REPORT:");
+		System.out.println("FINAL REPORT:");
 		System.out.println("The number of slots is: " + table.numSlots());
 		System.out.println("The number of entires is: " + table.numEntries());
 		
